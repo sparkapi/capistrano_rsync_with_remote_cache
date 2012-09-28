@@ -4,7 +4,7 @@ require 'fileutils'
 module Capistrano
   module Deploy
     module Strategy
-      class RsyncWithRemoteCache < Remote
+      class RsyncWithRemoteCacheWithComposer < Remote
         
         class InvalidCacheError < Exception; end
 
@@ -31,6 +31,7 @@ module Capistrano
         
         def update_local_cache
           system(command)
+          system("composer install -d #{local_cache_path}/")
           mark_local_cache
         end
         
